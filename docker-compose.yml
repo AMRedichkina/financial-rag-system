@@ -1,0 +1,72 @@
+services:
+  fastapi:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: fastapi_rag
+    volumes:
+      - ./backend:/app  # ensure app/ is mounted at /app
+    ports:
+      - "8000:80"
+    env_file:
+      - .env
+    command: uvicorn app.main:app --host 0.0.0.0 --port 80 --reload
+    depends_on:
+      - neo4j
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider localhost:80 || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - appnet
+
+  neo4j:
+    image: neo4j:5.21
+    container_name: neo4j_rag
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      NEO4J_AUTH: ${NEO4J_USER:-neo4j}/${NEO4J_PASSWORD}
+      NEO4J_server_config_strict__validation_enabled: "false"
+    volumes:
+      - rag_v1_neo4j_data:/data
+      - rag_v1_neo4j_import:/var/lib/neo4j/import
+      - rag_v1_neo4j_logs:/logs
+    networks:
+      - appnet
+  
+  streamlit:
+    build: ./streamlit_app
+    container_name: streamlit
+    ports:
+      - "8501:8501"
+    depends_on:
+      - fastapi
+    networks:
+      - appnet
+
+# volumes:
+#   rag_v1_neo4j_data:
+#     external: true
+#     name: consigli12_rag_v1_neo4j_data
+
+#   rag_v1_neo4j_import:
+#     external: true
+#     name: consigli12_rag_v1_neo4j_import
+
+#   rag_v1_neo4j_logs:
+#     external: true
+#     name: consigli12_rag_v1_neo4j_logs
+
+volumes:
+  rag_v1_neo4j_data:
+  rag_v1_neo4j_import:
+  rag_v1_neo4j_logs:
+
+
+networks:
+  appnet:
+    driver: bridge

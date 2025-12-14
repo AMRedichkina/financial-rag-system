@@ -1,0 +1,139 @@
+# ======================================
+# PYTHON / FASTAPI / PIPELINE
+# ======================================
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.pkl
+
+# Byte-compiled / optimized files
+*.py[cod]
+*$py.class
+
+# Local Python config
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Dist and build
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+
+# ======================================
+# DOC PIPELINE ARTIFACTS
+# ======================================
+
+# Chunked JSONs
+*.chunks_md_tables.json
+
+# Extracted text files
+*.txt
+*.md
+
+# Temporary pipeline outputs
+tmp/
+temp/
+cache/
+**/.cache/
+logs/
+*.log
+
+# Large data you don't want in git
+Data/**/*.pdf
+Data/**/*.docx
+Data/**/*.xlsx
+Data/**/*.csv
+Data/**/*.json
+
+
+# ======================================
+# STREAMLIT APP
+# ======================================
+
+# Streamlit cache
+.streamlit/
+.streamlit/cache/
+.streamlit/secrets.toml
+
+# Build artifacts
+frontend/node_modules/
+node_modules/
+*.js.map
+*.css.map
+
+
+# ======================================
+# DOCKER / NEO4J
+# ======================================
+
+# Docker build artifacts
+docker-compose.override.yml
+*.pid
+*.seed
+*.bak
+
+# Neo4j data directories
+neo4j/
+neo4j_data/
+data/
+import/
+logs/
+metrics/
+plugins/
+
+# Named volumes (you never store them in git)
+rag_v1_neo4j_data/
+rag_v1_neo4j_import/
+rag_v1_neo4j_logs/
+rag_v2_neo4j_data/
+rag_v2_neo4j_import/
+rag_v2_neo4j_logs/
+
+
+# ======================================
+# ENVIRONMENT VARIABLES
+# ======================================
+
+# Never commit secrets
+.env
+*.env
+.env.*
+!*.env.example   # allow template
+
+
+# ======================================
+# IDE / OS FILES
+# ======================================
+
+# VSCode
+.vscode/
+.code/
+*.code-workspace
+
+# PyCharm / IntelliJ
+.idea/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+# Windows
+Thu
